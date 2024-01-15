@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
 
+export const SelectedPerson = ({ updateAge, name, id, avatarURL }) => {
 
-export const SelectedPerson = ({ updateAge, name, age, avatarURL }) => {
-
-    const handlerAge = () => {
-        updateAge(age)
+    const handlerAge = (idUpdate) => {
+        updateAge(idUpdate)
     }
 
     return (
@@ -14,9 +12,8 @@ export const SelectedPerson = ({ updateAge, name, age, avatarURL }) => {
                 <div className='allowed'>
                     <img src={avatarURL} alt="pfp" />
                     <h3>{name}</h3>
-                    <h3>{age}</h3>
                     <div className='btnSelect'>
-                        <button onClick={handlerAge}>Increase Age</button>
+                        <button onClick={() => handlerAge(id)}>Increase Age</button>
                     </div>
                 </div>
             </div>

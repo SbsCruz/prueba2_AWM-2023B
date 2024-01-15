@@ -10,46 +10,34 @@ function App() {
 
   const [name, setName] = useState("");
   const [avatarURL, setAvatarURL] = useState("");
-  const [age, setAge] = useState()
+  const [lista, setLista] = useState(personListData)
+  const [id, setId] = useState()
 
-  const selectCard = (newName, newAvatarURL, age) => {
+  const selectCard = (newName, newAvatarURL, id) => {
     setName(newName)
     setAvatarURL(newAvatarURL)
-    setAge(age)
+    setId(id)
   }
-  const updateAge = (newAge)=>{
-    setAge(newAge+1)
-  }
+
+
+  const updateAge = (id) => {
+    setLista(prevLista => {
+      const updatedList = [...prevLista]; // Clona la lista
+      updatedList[id - 1].age += 1;       // Modifica directamente la edad de la persona específica
+      return updatedList;                 // Establece la lista actualizada como nuevo estado
+    });
+  };
 
   return (
     <div className="App">
       <h1>Cinefest Manager</h1>
 
       <div className='container'>
-
-        <div className='allowed'>
-          <h2>Allowed</h2>
-        {personListData.map((person, index) => person.age > 18 ? (
-          <PersonCardList selectCard={selectCard} key={index} avatarURL={person.avatarURL} name={person.name} newage={age} age={person.age} city={person.city} country={person.country} address={person.address} />
-          
-          ) : null
-          )}
-            </div>
-
-            <div className='disallowed'>
-          <h2>Disallowed</h2>
-        {personListData.map((person, index) => person.age < 18 ? (
-            <PersonCardList selectCard={selectCard} key={index} avatarURL={person.avatarURL} name={person.name} newage={age} age={person.age} city={person.city} country={person.country} address={person.address} />
-            
-            ) : null
-            )}
-            </div>
+        <PersonCardList selectCard={selectCard} lista={lista} />
       </div>
-
-
-      <SelectedPerson updateAge={updateAge} avatarURL={avatarURL} name={name} age={age}/>
+      <SelectedPerson updateAge={updateAge} avatarURL={avatarURL} name={name} id={id} />
     </div>
   )
-}
 
+}
 export default App;
